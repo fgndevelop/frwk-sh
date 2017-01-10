@@ -1,0 +1,138 @@
+2017-01-06	<fgndevelop@posteo.org>	
+		- changed MAN_DATE to reflect the modification time of the man page body
+		  for the demo man page, the date gets hardcoded into the payload
+
+2017-01-05	<fgndevelop@posteo.org>	
+		- working on the demo man page led to the removal of the mmr utility
+		  the entire man page business has been simplified and is now dealt with
+		  by the Makefile itself. Goodbye mmr.
+
+2017-01-01	<fgndevelop@posteo.org>	
+		- moved the template Makefiles from sfw/tmpl to sfw/make so we can
+		  provide scripts with a parsed, ready to use custom Makefile in sfw/make
+		  rather than leaving it in the sfw directory
+		- changed mmr to create a rule for the provided sample man page when 
+		  it cannot find a custom man page
+		- default man page body resides in sfw/man now (for good)
+
+2016-12-24	<fgndevelop@posteo.org>	
+		- the "sfw/man/default" directory is removed, it's pointless. The
+		  default files (header, footer) go to "sfw/man", the default man page
+ 		  goes to the script's toplevel directory 
+
+2016-12-23	<fgndevelop@posteo.org>	
+		- renamed the whole thing from sfw to frwk-sh as the abbreviation
+		  "sfw" turned out to be a bit too popular. So the utility is called
+		  frwk-sh, the subdirectory with the framework files is still called
+		  sfw but is hidden now (it's only edited for developing purpose, anyway)
+
+2016-12-22	<fgndevelop@posteo.org>	
+		- renamed the "sfw" folder to "framework" (in the source code, that is)
+		- renamed the "sfw_init" folder to "cli"
+		- renamed the "sfw_init" tool to "sfw"
+		- changed the custom Makefile logic to simply include "Makefile.custom"
+		  if it is present
+
+2016-11-05	<fgndevelop@posteo.org>	
+  		- removed _sfw_ifs from sfw/header/02_constants.sh as this is 
+                  a relict and no longer in use
+  		- added the cmdline to the bug report
+		- modified sfw/lib/sfw_cli.sh to return the correct option name
+		  when a long option's argument is appended to the option with "="
+
+2016-10-21	<fgndevelop@posteo.org>	
+		- Makefile is now stripping DESTDIR and PREFIX before
+		  checking for content
+		- INSTALL_PATH now uses $(realpath ...) for cleaner output
+
+2016-09-30	<fgndevelop@posteo.org>	
+		- Added "SHORT_DESCRIPTION" to usage printing function
+
+2016-09-30	<fgndevelop@posteo.org>	
+		- Cosmetic changes on sample script
+
+2016-09-26	<fgndevelop@posteo.org>	
+		- changed sfw_cli.sh to not use a combination like ${foo%${bar#xyz}}
+		  as this is not portable
+  		- all "runtime" output is now redirected to stderr as that seems to
+		  be what others do (and it makes sense if you want to seperate application
+		  output from runtime messages)
+		- changed is_readable from sfw_std.sh to return error VALUES and not
+		  print error messages
+
+2016-08-29	<fgndevelop@posteo.org>	
+		- changed double into single quotes for quoting arguments when
+		  adding them to _sfw_cmdline_arg_list and _sfw_nopt_arg_list
+
+2016-08-23	<fgndevelop@posteo.org>	
+		- sfw_cli.sh rewritten to use "internal" _sfw_ - style variables
+		  
+2016-08-19	<fgndevelop@posteo.org>	
+		- moved add_nopt_arg to is_nopt_arg and rewrote the function
+		- replaced "echo" with "runtime_msg" in sample script
+
+2016-08-19	<fgndevelop@posteo.org>	
+		- removed fatal_error() as it's pointless
+		
+2016-08-18	<fgndevelop@posteo.org>	
+		- moved _sfw_print_error_msg() to _sfw_print_msg
+		- added runtime_msg()
+		- moved missing_arg, invalid_option and more_than_once from
+		  the header into sfw_cli.sh
+
+2016-08-17	<fgndevelop@posteo.org>	
+		- added INSTALL_BIN_DIR (sbin) to Makefile
+		- added return value to _sfw_cleanup_hook as otherwise
+		  the script potentially exits with a non zero exit value
+	
+2016-08-15	<fgndevelop@posteo.org>	
+		- renamed _sfw_arg_list to _sfw_cmdline_arg_list,
+		  _sfw_nopt_list to _sfw_nopt_arg_list accordingly
+		- renamed noptv() to nopt_argv()
+		- renamed noptc to nopt_argc
+		- added _sfw_get_arg_from_list which is used by argv() and
+		  nopt_argv 
+		- updated sample script
+
+2016-08-14	<fgndevelop@posteo.org>
+		- Moved argv() code to _sfw_split_list() as this function
+		  can be reused by sfwcli.sh, see below
+		- added noptc() and noptv() to sfwcli.sh
+ 		- renamed _sfw_cmdline to _sfw_arg_list (like _sfw_nopt_list)
+		- added foreach_noptv() to the sample script to provide an
+		  example for the use of noptv() functions
+
+2016-08-13	<fgndevelop@posteo.org>
+	 	- Added proper argument check to the argv() function
+
+2016-08-12	<fgndevelop@posteo.org>
+		- Added @SCRIPT_SYNOPSIS_WITH_CMDS@ to the Makefile
+		- Beautify the sample script.sh 
+	    	- runtime_error() no longer exits the script, the only error function
+ 		  that exits (and should do so) is usage_error. 
+
+2016-07-31	<fgndevelop@posteo.org>
+		- Added a test for numerical argument to the fatal_error() function
+
+2016-06-18	<fgndevelop@posteo.org>
+		- Added a cleanup function and some comments to the sample script
+
+2016-06-16	<fgndevelop@posteo.org>
+		- Added README and COPYING (license information) to the payload
+		- Modified sfw_init script: extracting entire payload when creating
+		  a project vs selectively extracting needed files when updating
+
+2016-05-17	<fgndevelop@posteo.org>
+		- Removed "set_cmdline" function from /header/06_functions.sh
+		  The function was hard to read and only used in getopts and argv.
+		  It has been replaced with equivalent inline code 
+		- added $(INSTALL_PATH_FILE) functionality to the Makefile
+
+2016-05-17	<fgndevelop@posteo.org>
+		- Changed parameter expansion in printing functions from
+		  sfw/header/04_error.sh from "$@" to "$*"
+   		- sfw_init now deletes "Makefile.old" if the diff reports
+		  that Makefile's didn't change
+
+2016-05-12	<fgndevelop@posteo.org>
+		- Changelog started

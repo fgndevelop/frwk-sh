@@ -1,0 +1,183 @@
+
+# Check command line arguments. If you change / remove default options,
+# make sure to update the script's usage text 
+parse_cmdline() 
+{
+  local option
+
+  # Note the use of <argc> which is a global sfw variable
+  while [ $OPTIND -le $argc ]; do
+
+    if getopts "no:r:ze+extremely-long-long-option+xyzzy+no-argument+optional:+required:" option; then 
+
+      case "$option" in 
+
+	# No argument required
+	n|no-argument)
+	   runtime_msg 'Option <$option> is the "no argument" option'
+	   ;;
+
+	# Optional argument 
+	o|optional)
+	   runtime_msg "You gave an optional argument to <$option>: $OPTARG"
+	   ;;
+
+	# Required argument 
+ 	r|required)	
+	   runtime_msg "Required argument for <$option> is: $OPTARG"
+	   ;;
+
+	# No long option
+ 	z)	
+	 runtime_msg "Did you know: option <$option> does not have a long equivalent"
+	 ;;
+	
+	# No short option
+ 	xyzzy)	
+	 runtime_msg "By the way: option <$option> does not have a short equivalent"
+	 ;;
+
+	# Extremely long option
+	e|extremely-long-long-option)
+	  runtime_msg "Yes, it is extremely long long"
+	  ;;
+ 
+	# How to implement optional arguments:
+	# ":" means "missing argument", so in case of "optional arguments"
+       	# simply don't consider it an error
+	# Note that "missing_argument()" is a sfw_cli.sh library function
+	":") 
+	  case $OPTARG in 
+	    o|optional) 
+	      runtime_msg "Option <$OPTARG> used without argument"
+              ;;
+	    *)
+              missing_argument 
+              ;;
+          esac
+	  ;;
+
+	# an unknown option was encountered and is in OPTARG
+        # Note that "invalid_option()" is a function of the sfw_cli.sh library
+	"?") invalid_option ;;
+
+	# Catch all (we should not get here)
+	# Note the use of "debug()" which is one of the three
+	#  main error # reporting functions in sfw
+	*) debug "getopts() returned unexpected option: <$option>"
+	   ;;
+
+      esac
+
+    # getopt returns an error for one out of two possible reasons:
+    # 1) the argument indicated by OPTIND is not an option
+    # 2) OPTIND is out of range (larger than the number of arguments provided) 
+    #    or larger than the number of arguments delimited by "--"
+    #    (see the sfw_cli library for details)
+    #
+    # Since the outer while loop in the above code makes sure that OPTIND
+    # is in range, this is case 1), a non-option argument
+    #
+    # It is obviously application dependent what to do with non-option values
+    # on the command line so this code is provided for reference (yet will serve
+    # the purpose in most cases)
+    else 
+      is_nopt_arg $OPTIND
+      OPTIND=$((OPTIND+1))
+    fi
+
+  done
+}
+
+##############################################################
+
+# Sample function to demonstrate how to loop through all non-optional
+# arguments (nopt_args) found when parsing the command line
+
+foreach_nopt_arg()
+{
+  local foreach_retval=0 foreach_counter=1 nopt_arg
+
+  # arg check
+  [ -z ${1+x} ] && debug "missing argument to function call foreach_nopt_arg()"
+
+  # Now run the given command for all non-option arguments
+  while [ $foreach_counter -le $nopt_argc ]; do
+    nopt_argv $foreach_counter nopt_arg
+    eval $1 $nopt_arg || foreach_retval=1
+    foreach_counter=$((foreach_counter+1))
+  done
+
+  # Return an overall return value (0 when all iterations returned 0)
+  return $foreach_retval 
+}
+
+##############################################################
+
+# Clean up stale files etc, has to be set up using set_exit_hook()
+cleanup () { runtime_msg "Demo Cleanup function called on exit!"; }
+
+##############################################################
+
+main() 
+{
+
+  # Set up an exit routine that cleans up. This is especially helpful
+  # when the script is aborted / exits abnormally. 
+  # This is an sfw-internal function
+  set_exit_hook cleanup
+
+  # Sample command line parsing function
+  parse_cmdline
+
+  # Print non-option arguments that were found on the command line
+  if [ $nopt_argc -gt 0 ]; then
+    runtime_msg "Non-optional arguments on the command line:"
+    foreach_nopt_arg "runtime_msg"
+  fi
+
+  # Hint on how to modify this program
+  runtime_msg "Edit $(readlink -e $0).sh to add functionality to this script !"
+  return 0
+
+  #
+  # Sample code for a script that uses command mode
+  #
+
+  # If the SCRIPT_CMD_LIST defined in the Makefile is not empty, the sfw header
+  # code takes the first cmdline argument to this script and matches it
+  # against the SCRIPT_CMD_LIST.
+  # If no match is found, the script will exit with an error message,
+  # otherwise the result will be placed in the global variable "cmd".
+  # The "command" is then removed from the command line, hence the rest of the
+  # command line can / should be parsed as usual.
+  
+  case $cmd in 
+ 
+    # Do the job for cmd1  
+    cmd1) cmd1_function "$@"
+          ;;
+ 
+    # Do the job for cmd2 
+    cmd2) cmd2_function "$@"
+          ;;
+  
+    # Commands are parsed by the sfw header, so program execution
+    # only ever comes here if the programmer missed a command in 
+    # the above code 
+    *)    debug "Unknown command: $cmd"
+          ;;
+  
+  esac
+}
+
+##############################################################
+
+if main; then
+  exit 0
+else 
+  runtime_error "execution failed"
+  exit 1
+fi
+
+# End of script.sh

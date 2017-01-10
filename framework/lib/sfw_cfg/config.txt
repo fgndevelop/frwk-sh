@@ -1,0 +1,15 @@
+zeile eins zwei drei
+
+in Flensburg isses vorbei ! # Kommentar
+				
+
+# Kommentar mit Leerzeichen
+#Kommentar ohne Leerzeichen
+
+number = 1234
+hex = 0x12ab
+string = "simple string"
+ref_string = "string with in internal reference $number"
+
+name = "multi line \
+string"

@@ -1,0 +1,19 @@
+Options:
+ -d, --directory <path>	      By default sfw_init will create a directory named <name>
+			        in the local directory. Use this option to specify a different
+			        directory in which the Script Framework Files will be placed. 
+ -a, --append-library <file>  The sfw-internal cli library is included by default. Use this
+			        option to append a library to the list of libraries that will 
+				be automatically included when building your script.
+				You can use this option multiple times
+ -f, --force		      Use this option to potentially overwrite files if a directory
+			        <name> already exists
+ -l, --library <file>	      Exclusively include the library <file>. This option can be used
+				multiple times but is mutually exclusive with the -a option since
+				it  includes ONLY the libraries listed on the command line
+ -s, --source-file <file>     Instead of the default sample script, <file> will be used as the
+ 		                actual script code for the project and copied into the toplevel
+				directory
+ -u, --update		      Update an existing directory
+     --help		      Display this help.
+ -V, --version		      Display version information.	

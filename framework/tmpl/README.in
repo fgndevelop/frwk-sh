@@ -1,0 +1,19 @@
+Sample README file for the script <@SCRIPT_NAME@>
+
+You created a @SFW_VERSION@ project. Now you can:
+
+- Edit <@SCRIPT_NAME@.sh>
+  This is the actual script code
+
+- Edit <@SCRIPT_NAME@.usage>
+  This information is displayed when executing '@SCRIPT_NAME@ --help'
+
+- Run 'make' in this directory
+  Builds the executable script named @SCRIPT_NAME@
+
+- Run 'make man'
+  Builds a demo man page
+
+- Run 'make help'
+  Prints an overview on the supported targets
+

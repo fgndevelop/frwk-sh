@@ -1,0 +1,27 @@
+
+<----------------------------------------------------------------------------
+@SFW_VERSION@ template usage text
+
+This text serves as an example only. Adjust it to your needs by editing 
+<@SFW_USAGE_TXT@> 
+
+This text is part of the executable script, so changes to this file only
+apply after running "make / make install" in this script's toplevel directory.
+
+Following is a sample usage text taken from the util-linux package:
+---------------------------------------------------------------------------->
+
+Options:
+ -n, --no-argument       option does not use argument
+ -o, --optional[=<arg>]  option argument is optional
+ -r, --required <arg>    option requires an argument
+ -z                      no long option
+     --xyzzy             a long option only
+ -e, --extremely-long-long-option
+                         use next line for description when needed
+ -l, --long-explanation  an example of a very verbose and chatty option
+                           description on two or multiple lines, where the
+                           continuation lines are indented by two spaces
+ -f, --foobar            next option description resets indent
+     --help		 display this help and exit
+ -V, --version  	 output version information and exit

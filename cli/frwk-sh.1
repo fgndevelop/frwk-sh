@@ -1,0 +1,121 @@
+.SH SYNOPSIS
+.SY @SCRIPT_NAME@ 
+.OP \-adflsuV
+.OP \-d dir
+.OP \-a name
+.OP \-f
+.OP \-s file 
+.OP \-u
+.RI name
+.YS
+.
+.SH DESCRIPTION
+.B frwk-sh
+is the command line utility that initializes Shell Script Framework projects
+or updates an existing project with a new version of the framework.
+It's a small script with a tarball attached as payload. Upon execution, the
+tarball is extracted to the specified directory, a few variables are parsed
+into the resulting files and the rest is up to you.
+.
+.SH OPTIONS
+.TP
+.BR -d , " --directory" =dir
+.br
+The directory for the source files of your script is by default named like
+the script itself.
+If this is not desirable, use this option to specfiy the directory name.
+This does not affect the script's name, though.
+You may specfiy a pathname here.
+.
+.TP
+.BR -a , " --append" =libname
+.br
+The sfw-internal cli library is included by default with your script.
+Use this option to append another library.
+This option can be used multiple times.
+.br
+A note on library names:
+<libname> either specifies a filename, e.g. </usr/local/src/some_lib.sh> or one of the
+Shell Script Framework's internal libraries. Internal libraries are located
+in the ./sfw/lib directory (see the 
+.B FILES
+section on where this directory is located) and are named <sfw_foo.sh>.
+To specify internal libraries, just give the <foo> part of the filename as libname.
+.
+.TP
+.BR -l , " --library" =libname
+.br
+Use this option to explicitly include only the listed libraries into
+your script.
+This option can be used multiple times.
+It is mutually exclusive with the 
+.B -a
+option, though.
+See above for the details of libname.
+.
+.TP
+.BR -f , " --force"
+.br
+Per default, frwk-sh does not overwrite existing files / directories.
+If a directory named <name> already exists, you can use this option to
+(potentially) overwrite the files in this directory.
+.TP
+.BR -s , " --source" =file
+.br
+A sample script is provided when initializing a Shell Script Framework project. 
+Use this option to initialize the project with a specific source file instead.
+This is helpful when transforming existing scripts into framework-based ones.
+.TP
+.BR -u , " --update"
+.br
+Update an existing Shell Script Framework project to a new version.
+This will not change the actual script code but only the framework files.
+It's a good idea to make a backup of your script directory before trying
+this option.
+.TP
+.BR -V , " --version"
+.br
+Print version information
+.
+.SH "EXIT STATUS"
+frwk-sh will return one of these two exit codes:
+.TP
+.B 0
+Success
+.TP
+.B 1
+Failure, with the reason for failure being printed.
+.
+.SH FILES 
+Invoking 'frwk-sh foo' will extract the following files into a directory
+named <foo>
+.br
+See
+.BR frwk-sh (7)
+for an in-depth explanation of which file serves what purpose.
+.br
+Run 'make help' to get a list of the available make targets.
+.P
+.EX
+foo.sh                  The script code
+foo.usage               Usage information
+LICENSE                 A sample license
+Makefile                The Makefile
+README                  A sample README
+sfw                     The framework subdirectory
+.EE
+.
+.
+.SH COPYRIGHT
+.PP
+@LICENSE@
+.br
+@COPYING@
+.br
+@WARRANTY@
+.br
+.
+.SH "SEE ALSO"
+.PP
+.BR frwk-sh (7)
+.

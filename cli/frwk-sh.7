@@ -1,0 +1,138 @@
+.SH DESCRIPTION
+The Shell Script Framework consists of a Makefile, shell script code that is
+prepended as a header to the actual script and some supplementary
+files that help in providing documentation for your script.
+The framework provides the following functionality:
+.IP \(bu 2
+command line argument handling
+.PD 0
+.IP \(bu 2
+runtime information output 
+.IP \(bu 2
+help and usage information
+.IP \(bu 2
+version information
+.PD
+.
+.SH VARIABLES
+To keep namespace collisions to a minimum, all framework internal variables and
+functions are prepended with _sfw_
+.br
+The exceptions to this rule are variables that are meant for the "userspace":
+.TP
+.B argc
+Number of command line arguments
+.
+.SH FUNCTIONS
+The framework modifies the environment by setting a custom IFS.
+A default exit handler takes care of restoring the IFS to it's original 
+(i.e. prior to the script's execution) value. 
+The following functions are provided to further customize exit procedures:
+.TP
+.BR set_exit_hook " <cmd>"
+The default exit handler restores the environment to the state it had prior
+to execution of the script.
+If you need to take further action, use this function to install a custom exit
+handler which will be called by the default exit handler.
+<cmd> can be a command or a function name.
+.TP
+.B unset_exit_hook
+For completeness you can use this function to unset a previously set custom exit hook.
+This function does not take any arguments and simply clears the framework internal
+variable used to store the custom exit hook.
+The default exit handler is still executed to ensure the framework's changes to 
+the environment are always reverted. 
+.TP
+.BR set_interrupt " <handler>"
+Per default, a framework based script will handle SIGINT, SIGTERM and SIGHUP signals.
+If any of these signals is received, the exit handler is called prior to script
+termination. This ensures that custom exit / cleanup functions are called even
+if your script is terminated using e.g. CTRL-C
+.br
+Use the set_interrupt function to install a custom interrupt handler. 
+.P
+The following functions are available to provide runtime information.
+"Runtime information", because all functions automatically prepend the script's 
+name to their output.
+All functions print to stderr so runtime information can be easily redirected
+without affecting other script output.
+.TP
+.BR runtime_msg " <text>"
+Print the given text to stderr
+.TP
+.BR runtime_error " <text>"
+Print the given error message to stderr.
+Actually, both functions are code equivalent, runtime_error was kept to increase
+the script code's readability.
+.P
+The next two functions are meant for error reporting.
+Both of them exit the script with exit code 1 after printing the given text.
+.TP
+.BR usage_error " <text>"
+Missing or wrong options, arguments or a mix of these are considered a "usage error"
+In addition to the given error text, a short information on how to get more help is 
+printed to stderr.
+.TP
+.BR debug " <text>"
+Insert this function where only a bug can get you. In addition to the actual error
+message, a short help on how to report this bug is printed.
+.P
+The following miscellaneous functions are included:
+.TP
+.B argv
+<N> [name]
+.br
+This functions returns command line argument N either by echoing it or, if a second
+argument is provided by taking that argument as a variable name and setting it to
+the value of the command line argument, respectively.
+.TP
+.BR echo " <text>"
+This function simply replaces the shell's internal echo function with a more portable version.
+See the source code for a more thorough explanation.
+.
+.SH FILES
+Running 'frwk-sh foo' will create a directory 'foo' with the following files:
+.P
+.EX
+Makefile
+foo.sh
+foo.usage
+LICENSE
+README
+sfw
+.EE
+.P
+Subsequently running 'make' in this directory will create an executable script named 'foo'
+.
+.TP
+.B Makefile 
+The Makefile creates the executable script from the various source files. 
+It defines default values for the variables that will be substituted into the script
+and can thus the considered the configuration file for the script.
+.TP
+.B foo.sh
+This is the actual script code.
+By default, a sample script is included which demonstrates the usage of the above functions
+and serves as a template for your own code.
+.TP
+.B foo.usage
+This file will be parsed into the script's header and contains the usage information.
+The default file serves as an example on how to format the information.
+.
+.TP
+.B LICENSE
+GPL v2 is included as default license.
+.TP
+.B README
+This file is meant to be a reminder that your project should have a README file.
+It merely includes some help on Shell Script Framework based scripts. 
+.TP
+.B sfw
+The sfw subdirectory contains the script header, default data for man pages, the sfw
+libraries, template Makefiles and the parser script for parsing variables from the 
+Makefile into the script. Take a look at the files to get more information.
+.
+.SH "SEE ALSO"
+.PP
+.BR frwk-sh (1)
+.
