@@ -1,18 +1,18 @@
 
-			frwk-sh, the Shell Script Framework
+#frwk-sh, the Shell Script Framework
 
 To give you a short yet complete overview on the Shell Script Framework,
 the following topics are covered in this README:
 
-1) WTF
-2) What it is NOT
-3) Best practices
-4) Portability
-5) Usability
-6) Getting started
-7) Bugs
+1. WTF
+2. What it is NOT
+3. Best practices
+4. Portability
+5. Usability
+6. Getting started
+7. Bugs
 
-What's This Framework (for) ?
+##What's This Framework (for) ?
  This framework is meant to automatize the process of creating proper command 
  line interfaces for shell scripts by providing a template for argument handling,
  runtime information output and usage documentation.
@@ -22,13 +22,13 @@ What's This Framework (for) ?
  simplified as much as possible and integrating that documentation into your script has
  been automatized to the point of a simple 'make' run.
 
-What it is NOT
+##What it is NOT
  The framework is NOT meant to be a scripting library that provides you with extra functionality
  that you may or may not need (even though libraries are part of the framework).
  The framework is rather meant as a wrapper around your existing code to serve as both
  motivation and standardization effort when starting a script from scratch.
 
-Best Practices
+##Best Practices
  In order to increase a script's robustness, the "unofficial strict mode" is turned
  on, an exit handler is installed and e.g. the builtin echo command is replaced with
  a more portable function using printf. The idea is to implement default
@@ -41,7 +41,7 @@ Best Practices
  internet resources on shell script programming. The Script Framework is meant
  to be an implementation of the ideas presented in those resources.
 
-Portability
+##Portability
  All Shell Script Framework code is written with portability in mind, since relying
  on a certain shell's specific behaviour may work on many systems and fail with
  spurious errors on others. 
@@ -56,7 +56,7 @@ Portability
  the portability of your script code, you can still produce as many bashisms as you want
  in YOUR portion of the code. After all, it's meant to be a framework, not an ideology.
  
-Usability
+##Usability
  An improved getopts version is provided via the cli library. This library is included
  into the resulting script by default. It is self-contained in the sense that it  is
  entirely written in shell code, supports --long-options (as well as the short
@@ -70,7 +70,7 @@ Usability
  is supported as well. All it takes is editing the provided default man page,
  and running 'make man'. Or simply run 'make man' to get a demo man page.
 
-Getting started
+##Getting started
  If you want to give the Script Framework a try, download the sources and
  run 'make' to create the frwk-sh tool which is the command line interface to the
  Shell Script Framework.
@@ -84,7 +84,7 @@ Getting started
  read that man page for instructions on how to create your own man page.
  Run 'make help' for a list of targets provided by the Makefile.
 
-Bugs
+##Bugs
  Shared libraries are not functional yet, so far it's static libraries only 
  that are implemented into the script.
 
