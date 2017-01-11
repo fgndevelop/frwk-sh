@@ -1,5 +1,5 @@
 
-#frwk-sh, the Shell Script Framework
+#frwk-sh - the Shell Script Framework
 
 To give you a short yet complete overview on the Shell Script Framework,
 the following topics are covered in this README:
@@ -88,4 +88,4 @@ the following topics are covered in this README:
  Shared libraries are not functional yet, so far it's static libraries only 
  that are implemented into the script.
 
-									fgndevelop
+fgndevelop
