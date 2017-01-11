@@ -307,13 +307,11 @@ extract_payload()
     cp "${script_dir}/Makefile" "${script_dir}/${backup_makefile}"
 
     # Now extract the sfw subdirectory
+    # TODO: if Makefile.custom.in changed it's format, we have a problem
     if ! tail -n +${payload_lineno} $0 | tar -C "$script_dir" -xjf - "./sfw"; then
       runtime_error "Extracting sfw subdirectory from payload failed !"
       return 1
     fi
-
-    # Remove the file(s) that we do NOT need
-    rm "${sfw_make_dir}/${custom_makefile}.in"
 
     # Try to update the Makefile
     # Print some guidance on how to deal with a failed update

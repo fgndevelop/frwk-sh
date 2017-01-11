@@ -91,9 +91,12 @@ $(SCRIPT_NAME) :
 
 #################################################################################
 
-# Default target is defined, now include a custom Makefile if there is one
+# If the script code is a concatenation of various source files, a custom
+# Makefile is required. This Makefile is then responsible for producing
+# $(SCRIPT_CODE)
 ifneq ($(wildcard $(CUSTOM_MAKEFILE)),)
-  include $(CUSTOM_MAKEFILE)
+$(SCRIPT_CODE) : $(CUSTOM_MAKEFILE)
+	@$(MAKE) -sf $< $@
 endif
 
 #################################################################################

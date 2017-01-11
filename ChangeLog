@@ -1,6 +1,7 @@
 2017-01-06	<fgndevelop@posteo.org>	
 		- changed MAN_DATE to reflect the modification time of the man page body
 		  for the demo man page, the date gets hardcoded into the payload
+		- Tanja added
 
 2017-01-05	<fgndevelop@posteo.org>	
 		- working on the demo man page led to the removal of the mmr utility
