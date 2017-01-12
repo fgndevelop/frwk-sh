@@ -83,7 +83,7 @@ PAYLOAD_FILE		:= payload.tar.bz2
 
 # Single Shell Script Framework files 
 PAYLOAD_MAKEFILE	:= $(PAYLOAD_MAKE_DIR)/Makefile.in
-PAYLOAD_MAKEFILE_CUSTOM	:= $(PAYLOAD_MAKE_DIR)/Makefile.custom.in
+PAYLOAD_MAKEFILE_CUSTOM	:= $(PAYLOAD_MAKE_DIR)/Makefile.custom
 PAYLOAD_SCRIPT		:= $(PAYLOAD_TOP_DIR)/script.sh
 PAYLOAD_USAGE_TXT	:= $(PAYLOAD_TOP_DIR)/script.usage
 PAYLOAD_SFW_HEADER_FILE	:= $(PAYLOAD_SFW_HEADER_DIR)/sfw_header.sh
@@ -185,8 +185,6 @@ $(PAYLOAD_FILE) : $(PAYLOAD_DIRS) \
 
 #################################################################################
 
-
-#MAN_TITLE      	:= FRWK-SH
 MAN_SOURCE     	:= Script Framework 
 MAN_MANUAL     	:= Script Framework User Guide
 MAN_AUTHOR    	:= $(SCRIPT_MAINTAINER)

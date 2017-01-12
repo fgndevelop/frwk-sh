@@ -42,24 +42,25 @@ LICENSE				+= <http://www.gnu.org/licenses/gpl-2.0.html>
 COPYING				:= This is free software: you are free to change and redistribute it.
 WARRANTY			:= There is NO WARRANTY, to the extent permitted by law.
 
+#################################################################################
+
+# The following variables are internal to the build process and
+# should not require modification
+
+# Toplevel directory, final "/" stripped off
+TOPLEVEL		:= @TOPLEVEL@
+SHELL 			:= @SHELL@ 
+
 # Name of the file that contains the actual script code 
-SCRIPT_CODE			:= $(SCRIPT_NAME).sh
-SCRIPT_USAGE			:= $(SCRIPT_NAME).usage
+SCRIPT_CODE			:= $(TOPLEVEL)/$(SCRIPT_NAME).sh
+SCRIPT_USAGE			:= $(TOPLEVEL)/$(SCRIPT_NAME).usage
 
 # By default, the sfw_cli library is added to the script 
 # This list can be modified using the -a and -l switch with sfw_init
 SCRIPT_LIBS			= $(SFW_DEFAULT_LIB)
 
 # Default name of the custom Makefile
-CUSTOM_MAKEFILE			:= Makefile.custom 
-
-#################################################################################
-
-# The following variables are internal to the build process
-
-# Toplevel directory, final "/" stripped off
-TOPLEVEL		:= @TOPLEVEL@
-SHELL 			:= @SHELL@ 
+CUSTOM_MAKEFILE			:= $(TOPLEVEL)/Makefile.custom 
 
 # Diagnostic messages default format
 # [OK/FAIL] <Description of action (max. 22 characters)> (filename)
@@ -94,9 +95,16 @@ $(SCRIPT_NAME) :
 # If the script code is a concatenation of various source files, a custom
 # Makefile is required. This Makefile is then responsible for producing
 # $(SCRIPT_CODE)
+
 ifneq ($(wildcard $(CUSTOM_MAKEFILE)),)
 $(SCRIPT_CODE) : $(CUSTOM_MAKEFILE)
-	@$(MAKE) -sf $< $@
+        @$(MAKE) TOPLEVEL='$(TOPLEVEL)' SCRIPT_CODE='$(SCRIPT_CODE)' -sf $< $@
+
+.PHONY : custom_clean
+custom_clean : $(CUSTOM_MAKEFILE)
+	@$(MAKE) TOPLEVEL='$(TOPLEVEL)' SCRIPT_CODE='$(SCRIPT_CODE)' -sf $< clean
+
+clean : custom_clean
 endif
 
 #################################################################################
@@ -335,7 +343,6 @@ uninstall-all : uninstall uninstall-man uninstall-lib
 .PHONY : clean
 clean : 
 	@rm -f $(SCRIPT_NAME) $(MAN_PAGES) $(MAN_PAGE_RULES)
-	@[ -e $(CUSTOM_MAKEFILE) ] && $(MAKE) --silent -f $(CUSTOM_MAKEFILE) clean || :
 	@rm -f "Makefile.old" "$(SFW_MAKE_DIR)/Makefile.old.in" "$(SFW_MAKE_DIR)/Makefile.changes"
 	@$(SUCCESS) "cleaned" "$(SCRIPT_NAME)"
 

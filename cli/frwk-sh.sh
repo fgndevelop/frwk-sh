@@ -279,11 +279,6 @@ extract_payload()
     # Parse the template Makefile to create the toplevel Makefile
     $parser "${sfw_make_dir}/Makefile.in" > "${script_dir}/Makefile"
    
-    # File: <sfw/make/Makefile.custom.in> 
-    # Parse the template custom Makefile just in case and remove the template
-    $parser "${sfw_make_dir}/${custom_makefile}.in" > "${sfw_make_dir}/$custom_makefile"
-    rm "${sfw_make_dir}/${custom_makefile}.in"
-
     # If the user wants a custom Makefile right away, we copy it into
     # the script_dir directory
     [ $custom -eq 1 ] && cp "${sfw_make_dir}/$custom_make" "$script_dir"
