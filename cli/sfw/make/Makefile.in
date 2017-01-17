@@ -98,7 +98,7 @@ $(SCRIPT_NAME) :
 
 ifneq ($(wildcard $(CUSTOM_MAKEFILE)),)
 $(SCRIPT_CODE) : $(CUSTOM_MAKEFILE)
-        @$(MAKE) TOPLEVEL='$(TOPLEVEL)' SCRIPT_CODE='$(SCRIPT_CODE)' -sf $< $@
+	@$(MAKE) TOPLEVEL='$(TOPLEVEL)' SCRIPT_CODE='$(SCRIPT_CODE)' -sf $< $@
 
 .PHONY : custom_clean
 custom_clean : $(CUSTOM_MAKEFILE)
