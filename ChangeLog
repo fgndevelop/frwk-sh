@@ -1,3 +1,7 @@
+2017-02-09	<fgndevelop@posteo.org>	
+		- Changed 'realpath' to 'abspath' for INSTALL_PATH in Makefile.in
+		  as otherwise installation fails for non-existing directories
+
 2017-01-17	<fgndevelop@posteo.org>	
 		- The man page hint below the usage text is now printed conditionally 
 		  if both MAN_SECTION and MAN_TITLE have been defined

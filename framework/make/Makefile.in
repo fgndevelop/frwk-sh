@@ -265,8 +265,9 @@ else
 PREFIX				:= $(DEFAULT_INSTALL_PREFIX)
 endif
 
-# Install locations
-INSTALL_PATH			:= $(realpath $(DESTDIR)/$(PREFIX))
+# Install locations. We have to use 'abspath' here as install locations
+# might not exist yet
+INSTALL_PATH			:= $(abspath $(DESTDIR)/$(PREFIX))
 INSTALL_BIN_DIR			:= $(INSTALL_PATH)/bin
 #INSTALL_BIN_DIR		:= $(INSTALL_PATH)/sbin
 INSTALL_MAN_DIR			:= $(INSTALL_PATH)/share/man

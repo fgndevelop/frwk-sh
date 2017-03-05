@@ -13,19 +13,21 @@
 .B frwk-sh
 is the command line utility that initializes Shell Script Framework projects
 or updates an existing project with a new version of the framework.
-It's a small script with a tarball attached as payload. Upon execution, the
-tarball is extracted to the specified directory, a few variables are parsed
+It's a small script with a tarball attached as payload.
+Each project is created in a distinct directory named <name>.
+The attached tarball is extracted to this directory, a few variables are parsed
 into the resulting files and the rest is up to you.
 .
 .SH OPTIONS
 .TP
 .BR -d , " --directory" =dir
 .br
-The directory for the source files of your script is by default named like
-the script itself.
-If this is not desirable, use this option to specfiy the directory name.
+The directory for the Shell Script Framework project is by default named after
+the resulting script, i.e. the name you provide as an argument when running 
+.B frwk-sh.
+If this is not desirable, use this option to specfiy a differing directory name.
 This does not affect the script's name, though.
-You may specfiy a pathname here.
+You may specfiy a pathname as an argument to this option, too.
 .
 .TP
 .BR -a , " --append" =libname
@@ -102,7 +104,7 @@ foo.usage               Usage information
 LICENSE                 A sample license
 Makefile                The Makefile
 README                  A sample README
-sfw                     The framework subdirectory
+sfw                     The Shell Script Framework subdirectory
 .EE
 .
 .
